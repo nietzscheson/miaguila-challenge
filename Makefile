@@ -18,3 +18,6 @@ deploy:
 	docker-compose run --rm api sls deploy
 test:
 	docker-compose run --rm api pytest
+import:
+	# docker-compose run --rm mongo mongoimport --host mongo --db trips --collection trips --authenticationDatabase admin --username root --password example --drop --file trips.json
+	docker-compose run --rm mongo mongoimport --host mongo --db trips --authenticationDatabase admin --username root --password example --drop --file trips.json
