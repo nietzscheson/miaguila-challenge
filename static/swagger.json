@@ -1,0 +1,16 @@
+
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "MiAguila Challenge API project",
+      "version": "1.0.0",
+      "title": "MiAguila Challenge API",
+      "contact": {
+        "email": "cristianangulonova@gmail.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    }
+  }
