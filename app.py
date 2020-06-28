@@ -73,3 +73,7 @@ api.add_resource(TripsCreate, SWAGGER_URL + '/trips')
 api.add_resource(TripsUpdate, SWAGGER_URL + '/trips/<id>')
 api.add_resource(TotalTrips, SWAGGER_URL + '/trips/total')
 api.add_resource(TotalTripsPerCity, SWAGGER_URL + '/trips/cities/<id>')
+
+@app.route('/')
+def hello():
+    return 'MiAguila Challenge'
