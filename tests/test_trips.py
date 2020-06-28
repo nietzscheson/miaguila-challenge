@@ -20,12 +20,14 @@ def test_total_trips_per_city():
     cali = get(base_url +  uri + 'Cali').json()
     cartagena = get(base_url +  uri + 'Cartagena').json()
     barranquilla = get(base_url +  uri + 'Barranquilla').json()
+    pasto = get(base_url +  uri + 'Pasto')
     
     assert bogota['data'] == 498
     assert medellin['data'] == 47
     assert cali['data'] == 29
     assert cartagena['data'] == 15
     assert barranquilla['data'] == 4
+    assert pasto.status_code == 204
 
 def test_trip_create():
 

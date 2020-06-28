@@ -52,7 +52,6 @@ class Trips(Resource):
 
         trip = trips.find_one_and_update({"_id": id}, {'$set': data})
 
-
         return {'data': json.dumps(data, default = json_util.default)}
 
 class TotalTrips(Resource):
@@ -65,8 +64,11 @@ class TotalTrips(Resource):
 class TotalTripsPerCity(Resource):
     def get(self, city_id):
 
+        # total = trips.find({"city": {"name": city_id}}).count()
         total = trips.find({"city": {"name": city_id}}).count()
 
+        if total == 0:
+           return {'data': "Doesn't exists trips for %s" % city_id }, 204
         return {'data': total}
 
 api.add_resource(Trips, SWAGGER_URL + '/trips')
