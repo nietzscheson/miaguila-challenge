@@ -30,7 +30,7 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
 
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
-class Trips(Resource):
+class TripsCreate(Resource):
 
     def post(self):
     
@@ -42,13 +42,12 @@ class Trips(Resource):
 
         return {'data': json.dumps(one, default = json_util.default)}
 
-    def put(self):
+class TripsUpdate(Resource):
+    def put(self, id):
 
         data = request.get_json(force=True)
 
-        id = ObjectId(data['_id']['$oid'])
-
-        del data['_id']
+        id = ObjectId(id)
 
         trip = trips.find_one_and_update({"_id": id}, {'$set': data})
 
@@ -62,15 +61,15 @@ class TotalTrips(Resource):
         return {'data': total}
 
 class TotalTripsPerCity(Resource):
-    def get(self, city_id):
+    def get(self, id):
 
-        # total = trips.find({"city": {"name": city_id}}).count()
-        total = trips.find({"city": {"name": city_id}}).count()
+        total = trips.find({"city": {"name": id}}).count()
 
         if total == 0:
-           return {'data': "Doesn't exists trips for %s" % city_id }, 204
+           return {'data': "Doesn't exists trips for %s" % id }, 204
         return {'data': total}
 
-api.add_resource(Trips, SWAGGER_URL + '/trips')
+api.add_resource(TripsCreate, SWAGGER_URL + '/trips')
+api.add_resource(TripsUpdate, SWAGGER_URL + '/trips/<id>')
 api.add_resource(TotalTrips, SWAGGER_URL + '/trips/total')
-api.add_resource(TotalTripsPerCity, SWAGGER_URL + '/trips/city/<city_id>')
+api.add_resource(TotalTripsPerCity, SWAGGER_URL + '/trips/cities/<id>')

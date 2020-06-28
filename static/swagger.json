@@ -1,16 +1,481 @@
-
 {
-    "openapi": "3.0.0",
-    "info": {
-      "description": "MiAguila Challenge API project",
-      "version": "1.0.0",
-      "title": "MiAguila Challenge API",
-      "contact": {
-        "email": "cristianangulonova@gmail.com"
+  "openapi": "3.0.0",
+  "info": {
+    "description": "MiAguila Challenge API project",
+    "version": "1.0.0",
+    "title": "MiAguila Challenge API",
+    "contact": {
+      "email": "cristianangulonova@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Trip Request",
+      "description": "Example API for requesting and return trip requests"
+    }
+  ],
+  "paths": {
+    "/v1/trips": {
+      "post": {
+        "tags": [
+          "Trip Request"
+        ],
+        "summary": "Create a new trip request system",
+        "requestBody": {
+          "description": "Trip Request Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/tripRequestPostBody"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/v1/trips/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the trip that we want to match",
+          "type": "string"
+        }
+      ],
+      "put": {
+        "summary": "edit a trip request by ID",
+        "tags": [
+          "Trip Request"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Trip Request id",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Trip Request Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/tripRequest"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/tripRequest"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/v1/trips/total": {
+      "get": {
+        "tags": [
+          "Total Trips Request"
+        ],
+        "summary": "Get total trips request",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/dataRequest"
+            }
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Trip request not found."
+          }
+        }
+      }
+    },
+    "/v1/trips/cities/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the trip that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Total Trips Per City Request"
+        ],
+        "summary": "Get trip request with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Trip Request id",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/dataRequest"
+            }
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Trip request not found."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
       },
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+      "tripRequestPostBody": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "pickup_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "pickup_location": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "format": "string"
+                  },
+                  "coordinates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["string","string"]
+                  }
+                }
+              }
+            }
+          },
+          "end": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "pickup_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "pickup_location": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "format": "string"
+                  },
+                  "coordinates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["string","string"]
+                  }
+                }
+              }
+            }
+          },
+          "country":{
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "city":{
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "passenger":{
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            }
+          },
+          "driver":{
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            }
+          },
+          "car":{
+            "type": "object",
+            "properties": {
+              "plate": {
+                "type": "string"
+              }
+            }
+          },
+          "status":{
+            "type": "string"
+          },
+          "check_code":{
+            "type": "string"
+          },
+          "createdAt":{
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt":{
+            "type": "string",
+            "format": "date-time"
+          },
+          "price":{
+            "type": "number",
+            "format": "float"
+          },
+          "driver_location":{
+            "type": "object",
+            "properties":{
+              "type": {
+                "type": "string"
+              },
+              "coordinates": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": ["string","string"]
+              }
+            }
+          }
+        }
+      },
+      "tripRequest": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "pickup_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "pickup_location": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "format": "string"
+                  },
+                  "coordinates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["string","string"]
+                  }
+                }
+              }
+            }
+          },
+          "end": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "pickup_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "pickup_location": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "format": "string"
+                  },
+                  "coordinates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["string","string"]
+                  }
+                }
+              }
+            }
+          },
+          "country":{
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "city":{
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "passenger":{
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            }
+          },
+          "driver":{
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            }
+          },
+          "car":{
+            "type": "object",
+            "properties": {
+              "plate": {
+                "type": "string"
+              }
+            }
+          },
+          "status":{
+            "type": "string"
+          },
+          "check_code":{
+            "type": "string"
+          },
+          "createdAt":{
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt":{
+            "type": "string",
+            "format": "date-time"
+          },
+          "price":{
+            "type": "number",
+            "format": "float"
+          },
+          "driver_location":{
+            "type": "object",
+            "properties":{
+              "type": {
+                "type": "string"
+              },
+              "coordinates": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": ["string","string"]
+              }
+            }
+          }
+        }
+      },
+      "dataRequest": {
+        "properties": {
+          "data":{
+            "type": "string"
+          }
+        }
+        
       }
     }
   }
+}

@@ -13,7 +13,7 @@ def test_total_trips():
 
 def test_total_trips_per_city():
     
-    uri = '/city/'
+    uri = '/cities/'
 
     bogota = get(base_url +  uri + 'Bogotá').json()
     medellin = get(base_url +  uri + 'Medellin').json()
@@ -36,7 +36,7 @@ def test_trip_create():
     response = request.json()
     data = json.loads(response['data'])
 
-    assert data['pickup_address'] == 'Cl. 90 #19-41, Bogotá, Colombia'
+    assert data['start']['pickup_address'] == 'Cl. 90 #19-41, Bogotá, Colombia'
     assert data['country']['name'] == 'Colombia'
     assert data['city']['name'] == 'Bogotá'
 
@@ -51,13 +51,18 @@ def test_trip_update():
 
     ## Update Data
 
-    data['pickup_address'] = 'Cl. 90 #19-41, Villavicencio, Colombia'
+    data['start']['pickup_address'] = 'Cl. 90 #19-41, Villavicencio, Colombia'
 
     ## Update Request
 
-    request = put(base_url, data = json.dumps(data));
+    id = data['_id']['$oid']
+
+    del data['_id'] 
+
+    request = put(base_url + '/' + id, data = json.dumps(data));
 
     response = request.json()
+
     data = json.loads(response['data'])
 
-    assert data['pickup_address'] == 'Cl. 90 #19-41, Villavicencio, Colombia'
+    assert data['start']['pickup_address'] == 'Cl. 90 #19-41, Villavicencio, Colombia'
