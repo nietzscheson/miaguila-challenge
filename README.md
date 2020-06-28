@@ -34,9 +34,9 @@ miaguila-challenge_mongo_1           docker-entrypoint.sh mongod      Up      27
 
 Y visitar:
 
-- [API]('http://localhost:5000')
-- [Documentación]('http://localhost:5000/v1')
-- [MongoDB UI Manager]('http://localhost:8081')
+- API: [http://localhost:5000]('http://localhost:5000')
+- Documentación: [http://localhost:5000/v1]('http://localhost:5000/v1')
+- MongoDB Manager: [http://localhost:8081]('http://localhost:8081')
 
 El proyecto fue construido usando Flask, en Python. Y una versión de MongoDB. Servicios configurados en el docker-compose.yml. Para darle características de API Rest a Flask, se instaló Flask-Restful.
 
