@@ -1,0 +1,6 @@
+Flask>=1.1.2
+Flask-RESTful>=0.3.8
+flask-swagger-ui>=3.25.0
+pytest>=5.4.3
+requests>=2.24.0
+Flask-PyMongo>=2.3.0
